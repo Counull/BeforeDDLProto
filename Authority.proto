@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package Authority;
+
+// 发送短信验证码请求消息
+message SendSmsCodeRequest {
+  string phone_number = 1; // 手机号
+}
+
+// 发送短信验证码响应消息
+message SendSmsCodeResponse {
+  bool success = 1;   // 发送是否成功
+  string message = 2; // 响应消息
+}
+
+// 验证短信验证码请求消息
+message VerifySmsCodeRequest {
+  string phone_number = 1; // 手机号
+  string code = 2;         // 短信验证码
+}
+
+// 验证短信验证码响应消息
+message VerifySmsCodeResponse {
+  bool success = 1;   // 验证是否成功
+  string message = 2; // 响应消息
+}
+
+// 注册请求消息
+message RegisterRequest {
+  string phone_number = 1; // 手机号
+  string username = 2;     // 用户名
+  string password = 3;     // 密码
+}
+
+// 注册响应消息
+message RegisterResponse {
+  bool success = 1;   // 注册是否成功
+  string message = 2; // 响应消息
+}
+
+// 登录请求消息
+message LoginRequest {
+  string phone_number = 1; // 手机号
+  string password = 2;     // 密码
+}
+
+// 登录响应消息
+message LoginResponse {
+  bool success = 1;   // 登录是否成功
+  string message = 2; // 响应消息
+  string token = 3;   // 登录成功后的令牌
+}
+
+service AccountService {
+  // 注册新账号
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  // 登录账号
+  rpc Login(LoginRequest) returns (LoginResponse);
+  // 发送短信验证码
+  rpc SendSmsCode(SendSmsCodeRequest) returns (SendSmsCodeResponse);
+  // 验证短信验证码
+  rpc VerifySmsCode(VerifySmsCodeRequest) returns (VerifySmsCodeResponse);
+}
